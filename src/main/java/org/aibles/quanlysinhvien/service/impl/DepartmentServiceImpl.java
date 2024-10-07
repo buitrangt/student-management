@@ -48,7 +48,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<Department> departments = departmentRepository.findAll();
         if (departments.isEmpty()) {
             log.warn("(getAllDepartments) No departments found.");
-            throw new BusinessException(InstructorCode.DEPARTMENT_NOT_FOUND);
         }
 
         List<DepartmentResponseDTO> departmentResponseDTOs = departments.stream()
