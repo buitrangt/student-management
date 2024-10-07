@@ -1,0 +1,106 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore target/ or build/ directories (compiled output)
+target/
+build/
+
+# Ignore Maven specific files
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+**/src/main/resources/META-INF/maven/**
+
+# Ignore Gradle specific files
+.gradle/
+build/
+
+# Ignore temporary files
+*.swp
+*.tmp
+*.bak
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore generated files
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore dependency directories
+node_modules/
+.bower_components/
+
+# Spring Boot specific files
+.env
+# If you're using the `.env` file for environment variables, you may choose not to ignore it
+
+# Ignore database files
+*.db
+*.sql
+*.sqlite
+
+# Ignore Eclipse-specific files if switching IDEs or importing projects
+.project
+.classpath
+.settings/
+.loadpath
+
+# Ignore JetBrains specific settings (if you use WebStorm, PhpStorm, etc.)
+.idea/
+
+# Ignore IntelliJ-specific .idea files, including workspace.xml, which changes often
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/libraries
+
+# Ignore the entire .idea directory except for the file "description.xml"
+.idea/*
+!.idea/description.xml
+
+# Ignore compiled Java class files
+*.class
+
+# Ignore Java build artifacts
+*.jar
+*.war
+*.ear
+
+# Ignore Maven, Gradle wrapper files
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Ignore build directories
+/build/
+!/build/libs/
+
+# Ignore temporary files, project logs, etc.
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore local configurations
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore IntelliJ specific code style settings
+.idea/codeStyles/
+
+# Ignore other IDE or editor specific files
+.vscode/
