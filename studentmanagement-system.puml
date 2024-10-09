@@ -1,0 +1,77 @@
+@startuml
+entity "department" as department {
+    * INT department_id
+    * VARCHAR(100) department_name
+}
+
+entity "class" as class {
+    * INT class_id
+    * VARCHAR(50) class_name
+    * INT department_id
+}
+
+entity "student" as student {
+    * INT student_id
+    * VARCHAR(100) full_name
+    * DATE date_of_birth
+    * ENUM('Male', 'Female') gender
+    * VARCHAR(255) address
+    * VARCHAR(100) email
+    * VARCHAR(15) phone_number
+    * INT class_id
+}
+
+entity "subject" as subject {
+    * INT subject_id
+    * VARCHAR(100) subject_name
+    * INT credit
+    * INT department_id
+}
+
+entity "lecturer" as lecturer {
+    * INT lecturer_id
+    * VARCHAR(100) full_name
+    * DATE date_of_birth
+    * ENUM('Male', 'Female') gender
+    * VARCHAR(100) email
+    * VARCHAR(15) phone_number
+    * INT department_id
+}
+
+entity "course" as course {
+    * INT course_id
+    * INT subject_id
+    * INT lecturer_id
+    * VARCHAR(10) semester
+    * VARCHAR(10) academic_year
+}
+
+entity "grade" as grade {
+    * INT student_id
+    * INT course_id
+    * FLOAT score
+}
+
+entity "student_course" as student_course {
+    * INT student_id
+    * INT course_id
+}
+
+entity "subject_lecturer" as subject_lecturer {
+    * INT subject_id
+    * INT lecturer_id
+}
+
+department ||--o{ class : "has"
+class ||--o{ student : "includes"
+department ||--o{ subject : "offers"
+department ||--o{ lecturer : "employs"
+subject ||--o{ course : "consists"
+lecturer ||--o{ course : "teaches"
+student ||--o{ grade : "receives"
+course ||--o{ grade : "assigns"
+student ||--o{ student_course : "enrolls in"
+course ||--o{ student_course : "is part of"
+subject ||--o{ subject_lecturer : "is taught by"
+lecturer ||--o{ subject_lecturer : "teaches"
+@enduml
