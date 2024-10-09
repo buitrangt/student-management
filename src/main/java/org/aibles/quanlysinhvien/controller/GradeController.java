@@ -4,6 +4,7 @@ package org.aibles.quanlysinhvien.controller;
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.dto.request.GradeRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.GradeListResponse;
 import org.aibles.quanlysinhvien.dto.response.GradeResponseDTO;
 import org.aibles.quanlysinhvien.service.GradeService;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,17 @@ public class GradeController extends BaseController {
         return successResponse(gradeResponseDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<GradeResponseDTO>>> getAll() {
+    @GetMapping("/grades")
+    public ResponseEntity<BaseResponse<GradeListResponse>> getAll() {
         List<GradeResponseDTO> grades = gradeService.getAll();
-        return successResponse(grades);
+
+        GradeListResponse gradeListResponse = new GradeListResponse(grades);
+
+        BaseResponse<GradeListResponse> response = BaseResponse.success(gradeListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/students/{studentId}/courses/{courseId}")
     public ResponseEntity<BaseResponse<GradeResponseDTO>> getById(

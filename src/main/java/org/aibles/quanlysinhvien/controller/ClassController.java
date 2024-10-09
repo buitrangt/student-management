@@ -2,6 +2,7 @@ package org.aibles.quanlysinhvien.controller;
 
 import org.aibles.quanlysinhvien.dto.request.ClassRequestDTO;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
+import org.aibles.quanlysinhvien.dto.response.ClassListResponse;
 import org.aibles.quanlysinhvien.dto.response.ClassResponseDTO;
 import org.aibles.quanlysinhvien.service.ClassService;
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,17 @@ public class ClassController extends BaseController {
         return successResponse(classResponseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<ClassResponseDTO>>> getAll() {
+    @GetMapping("/classes")
+    public ResponseEntity<BaseResponse<ClassListResponse>> getAll() {
         List<ClassResponseDTO> classes = classService.getAll();
-        return successResponse(classes);
+
+        ClassListResponse classListResponse = new ClassListResponse(classes);
+
+        BaseResponse<ClassListResponse> response = BaseResponse.success(classListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<ClassResponseDTO>> getById(@PathVariable int id) {

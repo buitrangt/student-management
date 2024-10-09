@@ -3,7 +3,9 @@ package org.aibles.quanlysinhvien.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aibles.quanlysinhvien.dto.request.AttendanceRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.AttendanceListResponse;
 import org.aibles.quanlysinhvien.dto.response.AttendanceResponseDTO;
+import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,11 +55,19 @@ public class AttendanceController extends BaseController {
         return successResponse(responseDTO);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAll() {
+    @GetMapping("/attendances")
+    public ResponseEntity<BaseResponse<AttendanceListResponse>> getAll() {
         log.info("(getAll) - retrieving all attendance records");
+
         List<AttendanceResponseDTO> responseDTOList = attendanceService.getAll();
-        return successResponse(responseDTOList);
+
+        AttendanceListResponse attendanceListResponse = new AttendanceListResponse(responseDTOList);
+
+        BaseResponse<AttendanceListResponse> response = BaseResponse.success(attendanceListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
+
 }
 

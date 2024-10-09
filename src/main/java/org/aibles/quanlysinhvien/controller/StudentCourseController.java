@@ -4,6 +4,7 @@ package org.aibles.quanlysinhvien.controller;
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.dto.request.StudentCourseRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.StudentCourseListResponse;
 import org.aibles.quanlysinhvien.dto.response.StudentCourseResponseDTO;
 import org.aibles.quanlysinhvien.service.StudentCourseService;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,17 @@ public class StudentCourseController  extends BaseController{
        return successResponse(studentCourseResponseDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<StudentCourseResponseDTO>>> getAll() {
+    @GetMapping("/student-courses")
+    public ResponseEntity<BaseResponse<StudentCourseListResponse>> getAll() {
         List<StudentCourseResponseDTO> studentCourses = studentCourseService.getAll();
-        return successResponse(studentCourses,HttpStatus.CREATED);
+
+        StudentCourseListResponse studentCourseListResponse = new StudentCourseListResponse(studentCourses);
+
+        BaseResponse<StudentCourseListResponse> response = BaseResponse.success(studentCourseListResponse);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
     @GetMapping("/students/{studentId}/courses/{courseId}")
     public ResponseEntity<BaseResponse<StudentCourseResponseDTO>> getById(

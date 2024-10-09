@@ -4,6 +4,7 @@ package org.aibles.quanlysinhvien.controller;
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.request.CourseRequestDTO;
 import org.aibles.quanlysinhvien.dto.response.ClassResponseDTO;
+import org.aibles.quanlysinhvien.dto.response.CourseListResponse;
 import org.aibles.quanlysinhvien.dto.response.CourseResponseDTO;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.service.CourseService;
@@ -30,11 +31,17 @@ public class CourseController extends BaseController {
 
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<CourseResponseDTO>>> getAll() {
+    @GetMapping("/courses")
+    public ResponseEntity<BaseResponse<CourseListResponse>> getAll() {
         List<CourseResponseDTO> courses = courseService.getAll();
-        return successResponse(courses);
+
+        CourseListResponse courseListResponse = new CourseListResponse(courses);
+
+        BaseResponse<CourseListResponse> response = BaseResponse.success(courseListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<CourseResponseDTO>> getById(@PathVariable int id) {

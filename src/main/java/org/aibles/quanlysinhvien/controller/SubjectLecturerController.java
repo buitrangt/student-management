@@ -2,6 +2,7 @@ package org.aibles.quanlysinhvien.controller;
 
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.request.SubjectLecturerRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.SubjectLecturerListResponse;
 import org.aibles.quanlysinhvien.dto.response.SubjectLecturerResponseDTO;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.entity.SubjectLecturerId;
@@ -28,11 +29,17 @@ public class SubjectLecturerController extends BaseController {
         return successResponse(subjectLecturerResponseDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<SubjectLecturerResponseDTO>>> getAll() {
+    @GetMapping("/subject-lecturers")
+    public ResponseEntity<BaseResponse<SubjectLecturerListResponse>> getAll() {
         List<SubjectLecturerResponseDTO> subjectLecturers = subjectLecturerService.getAll();
-        return successResponse(subjectLecturers);
+
+        SubjectLecturerListResponse subjectLecturerListResponse = new SubjectLecturerListResponse(subjectLecturers);
+
+        BaseResponse<SubjectLecturerListResponse> response = BaseResponse.success(subjectLecturerListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{subjectId}/{lecturerId}")
     public ResponseEntity<BaseResponse<SubjectLecturerResponseDTO>> getById(@PathVariable Integer subjectId, @PathVariable Integer lecturerId) {

@@ -4,6 +4,7 @@ package org.aibles.quanlysinhvien.controller;
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.dto.request.LecturerRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.LecturerListResponse;
 import org.aibles.quanlysinhvien.dto.response.LecturerResponseDTO;
 import org.aibles.quanlysinhvien.service.LecturerService;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,17 @@ public class LecturerController extends BaseController {
         return successResponse(lecturerResponseDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<LecturerResponseDTO>>> getAll() {
+    @GetMapping("/lecturers")
+    public ResponseEntity<BaseResponse<LecturerListResponse>> getAll() {
         List<LecturerResponseDTO> lecturers = lecturerService.getAll();
-        return successResponse(lecturers);
+
+        LecturerListResponse lecturerListResponse = new LecturerListResponse(lecturers);
+
+        BaseResponse<LecturerListResponse> response = BaseResponse.success(lecturerListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<LecturerResponseDTO>> getById(@PathVariable int id) {

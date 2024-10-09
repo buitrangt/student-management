@@ -4,6 +4,7 @@ package org.aibles.quanlysinhvien.controller;
 import org.aibles.quanlysinhvien.constant.ResponseCode;
 import org.aibles.quanlysinhvien.dto.response.BaseResponse;
 import org.aibles.quanlysinhvien.dto.request.DepartmentRequestDTO;
+import org.aibles.quanlysinhvien.dto.response.DepartmentListResponse;
 import org.aibles.quanlysinhvien.dto.response.DepartmentResponseDTO;
 import org.aibles.quanlysinhvien.service.DepartmentService;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,17 @@ public class DepartmentController extends BaseController {
         return successResponse(departmentResponseDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<BaseResponse<List<DepartmentResponseDTO>>> getAll() {
+    @GetMapping("/departments")
+    public ResponseEntity<BaseResponse<DepartmentListResponse>> getAll() {
         List<DepartmentResponseDTO> departments = departmentService.getAll();
-       return successResponse(departments);
+
+        DepartmentListResponse departmentListResponse = new DepartmentListResponse(departments);
+
+        BaseResponse<DepartmentListResponse> response = BaseResponse.success(departmentListResponse);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<DepartmentResponseDTO>> getById(@PathVariable int id) {
